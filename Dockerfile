@@ -7,5 +7,3 @@ WORKDIR /app
 
 COPY . /app
 
-RUN go mod tidy
-RUN go get -u github.com/spf13/cobra

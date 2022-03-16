@@ -2,7 +2,7 @@ version: '3.7'
 services:
   app:
     tty: true
-    container_name: cobra
+    container_name: block_chain
     build: .
     volumes:
       - .:/app
