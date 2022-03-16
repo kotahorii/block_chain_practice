@@ -115,6 +115,15 @@ func (bc *Blockchain) ProofOfWork() int {
 	return nonce
 }
 
+func (bc *Blockchain) Mining() bool {
+	bc.AddTransaction(MINING_SENDER, bc.blockchainAddress, MINING_REWARD)
+	nonce := bc.ProofOfWork()
+	previousHash := bc.LastBlock().Hash()
+	bc.CreateBlock(nonce, previousHash)
+	log.Println("action=mining, status=success")
+	return true
+}
+
 func NewBlock(nonce int, previousHash [32]byte, transactions []*Transaction) *Block {
 	b := new(Block)
 	b.nonce = nonce
@@ -158,17 +167,14 @@ func init() {
 }
 
 func main() {
-	blockchain := NewBlockchain()
+	myBlockchainAddress := "my_blockchain_address"
+	blockchain := NewBlockchain(myBlockchainAddress)
 
 	blockchain.AddTransaction("A", "B", 1.0)
-	previousHash := blockchain.LastBlock().Hash()
-	nonce := blockchain.ProofOfWork()
-	blockchain.CreateBlock(nonce, previousHash)
+	blockchain.Mining()
 
 	blockchain.AddTransaction("C", "D", 2.0)
 	blockchain.AddTransaction("X", "Y", 3.0)
-	nonce = blockchain.ProofOfWork()
-	previousHash = blockchain.LastBlock().Hash()
-	blockchain.CreateBlock(nonce, previousHash)
+	blockchain.Mining()
 	blockchain.Print()
 }
