@@ -60,6 +60,7 @@ func NewWallet() *Wallet {
 	digest6 := h6.Sum(nil)
 
 	chsum := digest6[:4]
+
 	dc8 := make([]byte, 25)
 	copy(dc8[:21], vd4[:])
 	copy(dc8[21:], chsum[:])

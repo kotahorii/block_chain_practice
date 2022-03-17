@@ -18,9 +18,9 @@ const (
 )
 
 type Block struct {
+	timestamp    int64
 	nonce        int
 	previousHash [32]byte
-	timestamp    int64
 	transactins  []*Transaction
 }
 type Blockchain struct {
@@ -50,8 +50,9 @@ func (t *Transaction) MarshalJSON() ([]byte, error) {
 	return json.Marshal(struct {
 		Sender    string  `json:"sender_blockchain_address"`
 		Recipient string  `json:"recipient_blockchain_address"`
-		Value     float32 `josn:"value"`
-	}{Sender: t.senderBlockchainAddress,
+		Value     float32 `json:"value"`
+	}{
+		Sender:    t.senderBlockchainAddress,
 		Recipient: t.recipientBlockchainAddress,
 		Value:     t.value,
 	})
